@@ -1,7 +1,33 @@
 
-# Origins
+# Purpose
 
-I started the present `git` repository from https://github.com/bibinwilson/kubernetes-prometheus, cmmit id `b1f2e73ee00bea1234b59f40fea81a3cbbf9e6b1`
+This is a POC of how to use Prometheus to monitor :
+
+*  **Kubernetes Cluster 1 (production)** : user facing service
+  * 2 namespaces : one for the app, one docker oci images app distribution
+  * a k8S cluster
+  * in the K8S CLuster, a `node` / `mongodb` app is deployed,
+  * antoher service, a minio S3 storage cluster, is deployed for use of the node app
+  * Prometheus monitors mongo cluster, minio cluster, and app workflows
+  * in the K8S Cluster, a Private docker registry with `Portus` service is deployed, (a second POC will replace Portus with Harbor) : users use it to docker pull images as part of theur subscribe plan . This is a Distributionb Channel, and the Kubernetes Cluster IS NOT THE ONE FROM WHICH OCI IMAGES ARE PULLED.
+* Cluster 2 : private autodevops service
+  * a k8S cluster, with 5 namespaces :
+    * dev
+    * integration
+    * staging (pre-production)
+    * devops (sprinkling a bit of magic)
+    * production (making money) **Kubernetes Cluster 1 (production)**
+  * in default namespace :
+    * a Notary Service is deployed, used to sign oci images across all namespaces
+    * A Keycloak Service is deployed, to manage Identity across all namespaces
+    * a HashiCorp Vault is deployed, for default namespace services secret management, in addition to a `SMACK` rotator.
+    * A `Rocketchat` Service is deployed
+  * in each namespace :
+    * A `HashiCorp Vault` is deployed, for the namespace's services secret management. Root secrets for this vault, are pulled from the vault in the default namespace, to which only high level administrators ahve access, through higly secured, auditable access control.
+    * In the K8S Cluster, a Private docker registry with `Portus` service is deployed, (a second POC will replace Portus with Harbor)
+    * Antoher service, a minio S3 storage cluster, is deployed for use as storage of the private docker registry
+    * A `clair scanner` is deployed with the portus service, to assess security improvement across namespaces
+    * Prometheus monitors mongo cluster, minio cluster, and app workflows
 
 
 # Run it against your own cluster
