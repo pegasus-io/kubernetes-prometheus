@@ -169,9 +169,11 @@ echo " Your prometheus replicaSet is  : [${REPLICASET_NAME}], has [${POD_NUMBER}
 
 
 kubectl scale --replicas=5 rs/${REPLICASET_NAME} -n monitoring
-# will scale out, and then autopmatically scale down due to deployement definition setting replica no
+# will scale out, and then automatically scale down due to deployment definition setting replica no to 1
 export DEPLOYMENT_NAME=$(kubectl get deployments -n monitoring|tail -n 1|awk '{print $1}')
 kubectl scale --replicas=10 deployment/${DEPLOYMENT_NAME} -n monitoring
+
+# And bam now this all scaled out nicely, without errors for me, uisng a 4 vCPU / 8Gb RAM VM
 ```
 
 # kubernetes-prometheus
