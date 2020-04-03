@@ -102,6 +102,12 @@ firefox http://${K8S_CLUSTER_API_SERVER_HOST}:${K8S_PROMETHEUS_PORT}/graph
 
 ```
 
+What you have now, is a Prometheus service, properly deployed to `Kubernetes`. But its config is empty.
+
+We need to configure it now :
+* To monitor `minio` :
+* To monitor `Mongodb` :
+
 # kubernetes-prometheus
 
 Configuration files for setting up prometheus monitoring on Kubernetes cluster.
