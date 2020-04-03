@@ -19,6 +19,31 @@ cd ${OPS_HOME}
 kubectl create namespace monitoring
 kubectl create --save-config -f ./
 kubectl apply -f ./
+```
+
+* example output :
+
+```bash
+jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$ kubectl create namespace monitoring
+namespace/monitoring created
+jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$ kubectl create --save-config -f ./
+clusterrole.rbac.authorization.k8s.io/prometheus created
+clusterrolebinding.rbac.authorization.k8s.io/prometheus created
+configmap/prometheus-server-conf created
+deployment.apps/prometheus-deployment created
+ingress.extensions/prometheus-ui created
+secret/prometheus-secret created
+service/prometheus-service created
+jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$ kubectl apply -f ./
+clusterrole.rbac.authorization.k8s.io/prometheus unchanged
+clusterrolebinding.rbac.authorization.k8s.io/prometheus unchanged
+configmap/prometheus-server-conf unchanged
+deployment.apps/prometheus-deployment unchanged
+ingress.extensions/prometheus-ui unchanged
+secret/prometheus-secret unchanged
+service/prometheus-service unchanged
+jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$
+```
 
 # kubernetes-prometheus
 
