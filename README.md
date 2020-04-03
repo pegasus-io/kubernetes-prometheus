@@ -108,7 +108,7 @@ We need to configure it now :
 * To monitor `minio` :
 * To monitor `Mongodb` :
 
-# Scale Prometheus
+# Scale out Prometheus
 
 * here is the replicaset deployed :
 
