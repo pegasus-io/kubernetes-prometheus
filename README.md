@@ -103,7 +103,6 @@ firefox http://${K8S_CLUSTER_API_SERVER_HOST}:${K8S_PROMETHEUS_PORT}/graph
 
 ```
 
-
 # kubernetes-prometheus
 
 Configuration files for setting up prometheus monitoring on Kubernetes cluster.
