@@ -167,7 +167,11 @@ export REPLICASET_NAME=$(kubectl describe replicaset prometheus-deployment-77cb4
 export POD_NUMBER=$(kubectl describe replicaset prometheus-deployment-77cb49fb5d -n monitoring|grep 'Replicas:'|awk '{print $2}')
 echo " Your prometheus replicaSet is  : [${REPLICASET_NAME}], has [${POD_NUMBER}] and we'll scale it to [5] "
 
+
 kubectl scale --replicas=5 rs/${REPLICASET_NAME} -n monitoring
+# will scale out, and then autopmatically scale down due to deployement definition setting replica no
+export DEPLOYMENT_NAME=$(kubectl get deployments -n monitoring|tail -n 1|awk '{print $1}')
+kubectl scale --replicas=10 deployment/${DEPLOYMENT_NAME} -n monitoring
 ```
 
 # kubernetes-prometheus
