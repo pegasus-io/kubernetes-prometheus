@@ -1,4 +1,3 @@
-
 # Purpose
 
 This is a POC of how to use Prometheus to monitor :
