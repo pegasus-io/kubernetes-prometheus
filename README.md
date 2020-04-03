@@ -110,6 +110,8 @@ We need to configure it now :
 
 # Scale Prometheus
 
+* here is the replicaset deployed :
+
 ```bash
 jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$ kubectl get replicasets -n monitoring
 NAME                               DESIRED   CURRENT   READY   AGE
@@ -156,7 +158,11 @@ Events:
   Normal  SuccessfulCreate  51m   replicaset-controller  Created pod: prometheus-deployment-77cb49fb5d-kjpbr
 jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$
 ```
+* so to scale it out :
+```bash
+# ---
 
+```
 
 # kubernetes-prometheus
 
