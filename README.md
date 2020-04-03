@@ -161,6 +161,11 @@ jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$
 * so to scale it out :
 ```bash
 # ---
+# kubectl scale replicasets nzmr --replicas=5
+export REPLICASET_NAME=""
+export REPLICASET_NAME=$(kubectl describe replicaset prometheus-deployment-77cb49fb5d -n monitoring|grep 'Name:'|grep -v 'conf'|awk '{print $2}')
+
+kubectl scale replicasets ${REPLICASET_NAME} --replicas=5
 
 ```
 
