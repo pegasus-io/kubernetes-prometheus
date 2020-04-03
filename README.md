@@ -44,6 +44,39 @@ secret/prometheus-secret unchanged
 service/prometheus-service unchanged
 jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$
 ```
+* For testing purposes on this repo, I deployed a `minio` S3 storage service in the default namespace, and the `prometheus` in the `monitoring` namespace, and the output reveals exposition :
+
+```bash
+jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$ kubectl get pods,svc
+NAME          READY   STATUS    RESTARTS   AGE
+pod/minio-0   1/1     Running   0          25h
+pod/minio-1   1/1     Running   0          25h
+pod/minio-2   1/1     Running   0          25h
+pod/minio-3   1/1     Running   0          25h
+
+NAME                    TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+service/kubernetes      ClusterIP      10.96.0.1        <none>        443/TCP          25h
+service/minio           ClusterIP      None             <none>        9000/TCP         25h
+service/minio-service   LoadBalancer   10.102.197.151   <pending>     9000:30138/TCP   25h
+jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$ kubectl get pods,svc -n monitoring
+NAME                                         READY   STATUS    RESTARTS   AGE
+pod/prometheus-deployment-77cb49fb5d-kjpbr   1/1     Running   0          2m4s
+
+NAME                         TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/prometheus-service   NodePort   10.102.135.95   <none>        8080:30000/TCP   2m4s
+jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$
+```
+
+* And now your `prometheus`, k8s deployed, is reachable through nodePort Service exposition at :
+
+```bash
+export K8S_CLUSTER_API_SERVER_HOST=minikube.pegasusio.io
+export K8S_PROMETHEUS_PORT=30000
+
+firefox http://${K8S_CLUSTER_API_SERVER_HOST}:${K8S_PROMETHEUS_PORT}/graph
+
+```
+
 
 # kubernetes-prometheus
 
