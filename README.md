@@ -164,8 +164,8 @@ jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$
 # kubectl scale replicasets nzmr --replicas=5
 export REPLICASET_NAME=""
 export REPLICASET_NAME=$(kubectl describe replicaset prometheus-deployment-77cb49fb5d -n monitoring|grep 'Name:'|grep -v 'conf'|awk '{print $2}')
-export POD_NUMBER=$(CCC)
-echo " Your prometheus replicaSet is  : [${REPLICASET_NAME}], has [${POD_NUMBER}] and we'll scale it to 5 "
+export POD_NUMBER=$(kubectl describe replicaset prometheus-deployment-77cb49fb5d -n monitoring|grep 'Replicas:'|awk '{print $2}')
+echo " Your prometheus replicaSet is  : [${REPLICASET_NAME}], has [${POD_NUMBER}] and we'll scale it to [5] "
 
 kubectl scale replicasets ${REPLICASET_NAME} --replicas=5
 
