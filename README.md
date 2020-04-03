@@ -108,6 +108,56 @@ We need to configure it now :
 * To monitor `minio` :
 * To monitor `Mongodb` :
 
+# Scale Prometheus
+
+```bash
+jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$ kubectl get replicasets -n monitoring
+NAME                               DESIRED   CURRENT   READY   AGE
+prometheus-deployment-77cb49fb5d   1         1         1       49m
+jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$ kubectl describe replicaset prometheus-deployment-77cb49fb5d -n monitoring
+Name:           prometheus-deployment-77cb49fb5d
+Namespace:      monitoring
+Selector:       app=prometheus-server,pod-template-hash=77cb49fb5d
+Labels:         app=prometheus-server
+                pod-template-hash=77cb49fb5d
+Annotations:    deployment.kubernetes.io/desired-replicas: 1
+                deployment.kubernetes.io/max-replicas: 2
+                deployment.kubernetes.io/revision: 1
+Controlled By:  Deployment/prometheus-deployment
+Replicas:       1 current / 1 desired
+Pods Status:    1 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:  app=prometheus-server
+           pod-template-hash=77cb49fb5d
+  Containers:
+   prometheus:
+    Image:      prom/prometheus
+    Port:       9090/TCP
+    Host Port:  0/TCP
+    Args:
+      --config.file=/etc/prometheus/prometheus.yml
+      --storage.tsdb.path=/prometheus/
+    Environment:  <none>
+    Mounts:
+      /etc/prometheus/ from prometheus-config-volume (rw)
+      /prometheus/ from prometheus-storage-volume (rw)
+  Volumes:
+   prometheus-config-volume:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      prometheus-server-conf
+    Optional:  false
+   prometheus-storage-volume:
+    Type:       EmptyDir (a temporary directory that shares a pod s lifetime)
+    Medium:
+    SizeLimit:  <unset>
+Events:
+  Type    Reason            Age   From                   Message
+  ----    ------            ----  ----                   -------
+  Normal  SuccessfulCreate  51m   replicaset-controller  Created pod: prometheus-deployment-77cb49fb5d-kjpbr
+jbl@poste-devops-jbl-16gbram:~/kubernetes-prometheus$
+```
+
+
 # kubernetes-prometheus
 
 Configuration files for setting up prometheus monitoring on Kubernetes cluster.
